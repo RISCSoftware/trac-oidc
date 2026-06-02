@@ -22,10 +22,10 @@ try:
 except ImportError:
      from urlparse import urlsplit
 
-from genshi.builder import tag
 from trac.config import BoolOption, PathOption
 from trac.core import implements, Component, ExtensionPoint
 from trac.perm import PermissionSystem
+from trac.util.html import html as tag
 from trac.util.translation import _
 from trac.web.api import IAuthenticator, IRequestHandler
 from trac.web.auth import LoginModule
