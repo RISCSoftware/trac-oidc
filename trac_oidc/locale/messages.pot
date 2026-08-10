@@ -1,0 +1,39 @@
+# Translations template for trac-oidc.
+# Copyright (C) 2026 ORGANIZATION
+# This file is distributed under the same license as the trac-oidc project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: trac-oidc 0.1.5.post1.dev0\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2026-06-05 18:55+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+#: trac_oidc/compat.py:23 trac_oidc/compat.py:35
+msgid "Logout"
+msgstr ""
+
+#: trac_oidc/trac_oidc.py:84
+msgid "Login using Google"
+msgstr ""
+
+#: trac_oidc/trac_oidc.py:91
+#, python-format
+msgid "logged in as %(user)s"
+msgstr ""
+
+#: trac_oidc/trac_oidc.py:156
+#, python-format
+msgid ""
+"Hello! You appear to be new here. A new authenticated session with "
+"username '%(authname)s' has been created for you."
+msgstr ""
+

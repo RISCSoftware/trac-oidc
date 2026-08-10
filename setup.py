@@ -44,6 +44,18 @@ class PyTest(TestCommand):
         errno = pytest.main(self.pytest_args)
         sys.exit(errno)
 
+extra = {}
+
+try:
+    import babel
+    from trac.dist import get_l10n_cmdclass
+except ImportError:
+    pass
+else:
+    extra['message_extractors'] = {
+        'trac-oidc': [('**.py', 'python', None)],
+    }
+    extra['cmdclass'] = get_l10n_cmdclass()
 
 setup(
     name='trac-oidc',
@@ -67,6 +79,11 @@ setup(
 
     packages=['trac_oidc'],
     include_package_data=True,
+    package_data={
+        'trac_oidc': [
+            'locale/*/LC_MESSAGES/*.mo'
+        ]
+    },
     zip_safe=True,
 
     install_requires=requires,
@@ -79,4 +96,5 @@ setup(
     tests_require=tests_require,
     cmdclass={'test': PyTest},
     extras_require={'testing': tests_require},
+    **extra
     )

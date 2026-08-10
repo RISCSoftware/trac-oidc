@@ -41,6 +41,8 @@ from .authenticator import (
     )
 from .compat import db_query, is_component_enabled, logout_link
 
+DOMAIN = 'trac_oidc'
+
 
 class OidcPlugin(Component):
     """ Authenticate via OpenID Connect
