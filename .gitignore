@@ -1,6 +1,9 @@
 *~
 *.pyc
+/.vs/
 /trac_oidc.egg-info/
+/build/
+/dist/
 /.tox/
 /.coverage
 /htmlcov/
