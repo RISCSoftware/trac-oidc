@@ -22,7 +22,7 @@ try:
 except ImportError:
      from urlparse import urlsplit
 
-from trac.config import BoolOption, PathOption
+from trac.config import BoolOption, Option, PathOption
 from trac.core import implements, Component, ExtensionPoint
 from trac.perm import PermissionSystem
 from trac.util.html import html as tag
@@ -54,6 +54,10 @@ class OidcPlugin(Component):
         """Path to client_secret file.  Relative paths are interpreted
         relative to the ``conf`` subdirectory of the trac environment.""")
 
+    provider_name = Option(
+        'trac_oidc', 'provider_name', 'Google',
+        """Name of the OpenID Connect provider.""")
+
     # deprecated
     absolute_trust_root = BoolOption(
         'openid', 'absolute_trust_root', 'true',
@@ -81,7 +85,7 @@ class OidcPlugin(Component):
 
         if not req.authname or req.authname == 'anonymous':
             # Not logged in, show login link
-            login_link = tag.a(_('Login using Google'),
+            login_link = tag.a(_('Login using %s') % provider_name,
                                href=oidc_href('login', return_to=path_qs))
             yield 'metanav', 'trac_oidc.login', login_link
 
