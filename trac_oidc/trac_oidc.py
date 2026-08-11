@@ -22,7 +22,7 @@ try:
 except ImportError:
      from urlparse import urlsplit
 
-from trac.config import BoolOption, Option, PathOption
+from trac.config import BoolOption, ListOption, Option, PathOption
 from trac.core import implements, Component, ExtensionPoint
 from trac.perm import PermissionSystem
 from trac.util.html import html as tag
@@ -85,7 +85,7 @@ class OidcPlugin(Component):
 
         if not req.authname or req.authname == 'anonymous':
             # Not logged in, show login link
-            login_link = tag.a(_('Login using %s') % provider_name,
+            login_link = tag.a(_('Login using %s') % self.provider_name,
                                href=oidc_href('login', return_to=path_qs))
             yield 'metanav', 'trac_oidc.login', login_link
 
@@ -281,6 +281,10 @@ class UserDatabase(Component):
     SUBJECT_SKEY = 'trac_oidc.subject'
     IDENTITY_URL_SKEY = 'openid_session_identity_url_data'
 
+    preferred_username_attrs = ListOption('trac_oidc', 'preferred_username_attrs',
+                                          default=['preferred_username', 'email', 'name'],
+                                          doc="""List of attributes to consider for the preferred username for new users.""")
+
     def __init__(self):
         self.helper = SessionHelper(self.env)
 
@@ -343,17 +347,15 @@ class UserDatabase(Component):
         ds[self.SUBJECT_SKEY] = self.subject_uri(iss, sub)
         ds.save()
 
-    @staticmethod
-    def preferred_username(id_token):
+    def preferred_username(self, id_token):
         """Get the preferred username for the user.
         """
         sub = id_token['sub']
         assert sub
-        return (
-            id_token.get('preferred_username')
-            or id_token.get('email')
-            or id_token.get('name')
-            or sub)
+        for attr in self.preferred_username_attrs:
+            if id_token.get(attr):
+                return id_token.get(attr)
+        return sub
 
     @staticmethod
     def default_attributes(id_token):
