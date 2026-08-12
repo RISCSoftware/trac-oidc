@@ -44,7 +44,9 @@ class PyTest(TestCommand):
         errno = pytest.main(self.pytest_args)
         sys.exit(errno)
 
-extra = {}
+extra = {
+    'cmdclass': {}
+}
 
 try:
     import babel
@@ -56,6 +58,8 @@ else:
         'trac-oidc': [('**.py', 'python', None)],
     }
     extra['cmdclass'] = get_l10n_cmdclass()
+
+extra['cmdclass']['test'] = PyTest
 
 setup(
     name='trac-oidc',
@@ -94,7 +98,6 @@ setup(
         },
 
     tests_require=tests_require,
-    cmdclass={'test': PyTest},
     extras_require={'testing': tests_require},
     **extra
     )
