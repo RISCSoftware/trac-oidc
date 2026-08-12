@@ -281,9 +281,14 @@ class UserDatabase(Component):
     SUBJECT_SKEY = 'trac_oidc.subject'
     IDENTITY_URL_SKEY = 'openid_session_identity_url_data'
 
-    preferred_username_attrs = ListOption('trac_oidc', 'preferred_username_attrs',
-                                          default=['preferred_username', 'email', 'name'],
-                                          doc="""List of attributes to consider for the preferred username for new users.""")
+    preferred_username_attrs = ListOption(
+        'trac_oidc', 'preferred_username_attrs',
+        default=['preferred_username', 'email', 'name'],
+        doc="""List of attributes to consider for the preferred username for new users.""")
+
+    allow_reusing_sessions = BoolOption(
+        'trac_oidc', 'allow_reusing_sessions', False,
+        """Whether to allow reusing existing non OpenID Connect sessions.""")
 
     def __init__(self):
         self.helper = SessionHelper(self.env)
@@ -307,6 +312,15 @@ class UserDatabase(Component):
                 self.log.info(
                     "Claiming session %s with oid identity %s for (%s, %s)",
                     authname, identity_url, iss, sub)
+                self.associate_session(authname, iss, sub)
+        if not authname and self.allow_reusing_sessions:
+            # Fallback to reusing an existing session
+            preferred_username = self.preferred_username(id_token)
+            authname = self.helper.find_session_by_sid(preferred_username)
+            if authname:
+                self.log.info(
+                    "Claiming existing session %s for (%s, %s)",
+                    authname, iss, sub)
                 self.associate_session(authname, iss, sub)
         return authname
 
@@ -416,6 +430,21 @@ class SessionHelper(Component):
                         " ORDER BY session.last_visit DESC",
                         (1, attr_name, attr_value))
         return [row[0] for row in rows]
+
+    def find_session_by_sid(self, sid):
+        """Find an authenticated session by its session ID.
+
+        """
+        rows = db_query(self.env,
+                        "SELECT session.sid "
+                        " FROM session"
+                        " WHERE session.sid=%s AND session.authenticated=%s"
+                        " ORDER BY session.last_visit DESC",
+                        (sid, 1))
+        sessions = [row[0] for row in rows]
+        if sessions:
+            return sessions[0]
+        return None
 
     def create_session(self, authname_base, attributes):
         """Create a new authenticated session.
