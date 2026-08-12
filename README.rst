@@ -9,8 +9,8 @@ Description
 ***********
 
 A plugin to support authentication to trac_ using the `OpenID
-Connect`_ protocol.  Currently this probably only works with
-Google_\’s *OpenID Provider*.
+Connect`_ protocol.  Currently this works with
+Google_\’s *OpenID Provider*, as well as KeyCloak_.
 
 This plugin was written as a partial replacement for the
 TracAuthOpenId_, since Google has (as of mid-June, 2015) `discontinued
@@ -31,6 +31,7 @@ Development takes place at github_.
 .. _trac: http://trac.edgewall.org/
 .. _TracAuthOpenId: https://pypi.python.org/pypi/TracAuthOpenId
 .. _google: https://developers.google.com/identity/protocols/OpenIDConnect
+.. _KeyCloak: https://www.keycloak.org/
 .. _discontinued support: https://support.google.com/accounts/answer/6206245
 .. _extension:
    https://developers.google.com/identity/protocols/OpenID2Migration#map-identifiers
@@ -43,6 +44,9 @@ Usage
 
 Obtain OAuth 2.0 Credentials
 ============================
+
+Using it with Google
+--------------------
 
 You must obtain *OAuth 2.0 credentials* from Google before you can
 use this plugin.
@@ -88,6 +92,12 @@ use this plugin.
    permissions so that not just anybody can read it.)
 
 
+Using it with KeyCloak
+----------------------
+
+TODO: document this!
+
+
 Install the Plugin
 ==================
 
@@ -118,6 +128,29 @@ In your ``trac.ini``::
   # interpreted relative to the ``conf`` subdirectory of the trac
   # environment (i.e. alongside ``trac.ini``.)
   client_secret_file = /path/to/client_secret.json
+
+  # Optional: Specify the name of the provider in the UI.
+  # The default is ``Google``.
+  provider_name = My OpenID Connect Provider
+
+  # Optional: Specify the attributes of the token that should be used as
+  # the preferred username.  The default is ``preferred_username, email, name``.
+  # The first attribute that is present in the token will be used as the
+  # preferred username, with ``sub`` as the fallback if none of the specified
+  # attributes are present.
+  preferred_username_attrs = my_username_attribute
+
+  # Optional: Specify whether to allow reusing existing non-OpenID Connect
+  # sessions for users who have already logged via other means before.
+  # The matching of existing sessions is done by the preferred username as
+  # it is returned by the OpenID Connect token (see above).
+  # The default is ``false``. In this case, a new session will always be
+  # created for users logging in via OpenID Connect.
+  #
+  # Note that this does not affect the migration from the old TracAuthOpenId
+  # plugin (see below). These sessions are always converted to
+  # OpenID Connect sessions as created by this plugin.
+  allow_reusing_sessions = true
 
   [openid]
 
@@ -167,7 +200,7 @@ Possible improvements.
 Generalize to work with more providers
 ======================================
 
-Though, currently, only authentication via Google’s OP is supported,
+Though, currently, only authentication via Google’s OP and KeyCloak is tested,
 it should be straightforward to generalize the plugin to work with other
 *OpenID Connect* providers, and other authentication services based on
 *OAuth 2.0* (e.g. Twitter, Facebook.)
@@ -188,7 +221,10 @@ Authors
 
 `Jeff Dairiki`_
 
+`Joachim Mairböck`_, RISC Software GmbH
+
 .. _Jeff Dairiki: mailto:dairiki@dairiki.org
+.. _Joachim Mairböck: mailto:joachim.mairboeck@risc-software.at
 
 .. |version| image::
     https://img.shields.io/pypi/v/trac-oidc.svg

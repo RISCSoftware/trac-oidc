@@ -2,6 +2,16 @@
 History
 *******
 
+Unreleased
+==========
+
+- Ported to python 3 and away from Genshi to support Trac 1.6.
+- Made the displayed provider name and username attributes configurable.
+  This helps using other providers than Google. (Keycloak works now too.)
+- Optionally allow reusing existing sessions from existing users which
+  logged in via other means before, beyond the migration from the old
+  TracAuthOpenId plugin.
+
 0.1.5 (2015-07-16)
 ==================
 

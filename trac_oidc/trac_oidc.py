@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # Copyright (C) 2015 Geoffrey T. Dairiki
+# Copyright (C) 2026 Joachim Mairböck, RISC Software GmbH
 #
 """ A plugin to support trac authentication using google's *OpenID
 Connect* provider.
