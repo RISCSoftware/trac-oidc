@@ -55,7 +55,7 @@ except ImportError:
     pass
 else:
     extra['message_extractors'] = {
-        'trac-oidc': [('**.py', 'python', None)],
+        'trac_oidc': [('**.py', 'python', None)],
     }
     extra['cmdclass'] = get_l10n_cmdclass()
 

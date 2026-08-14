@@ -12,6 +12,7 @@ from __future__ import absolute_import
 from contextlib import contextmanager
 from itertools import chain, count
 import os
+import pkg_resources
 
 try:
     from urllib.parse import urlencode
@@ -27,7 +28,7 @@ from trac.config import BoolOption, ListOption, Option, PathOption
 from trac.core import implements, Component, ExtensionPoint
 from trac.perm import PermissionSystem
 from trac.util.html import html as tag
-from trac.util.translation import _
+from trac.util.translation import domain_functions
 from trac.web.api import IAuthenticator, IRequestHandler
 from trac.web.auth import LoginModule
 from trac.web.chrome import add_notice, add_warning, INavigationContributor
@@ -41,7 +42,7 @@ from .authenticator import (
     )
 from .compat import db_query, is_component_enabled, logout_link
 
-DOMAIN = 'trac_oidc'
+_, add_domain = domain_functions('messages', ('_', 'add_domain'))
 
 
 class OidcPlugin(Component):
@@ -74,6 +75,14 @@ class OidcPlugin(Component):
         self.show_logout_link = not is_component_enabled(self.env, LoginModule)
 
         self.userdb = UserDatabase(self.env)
+
+        # load localizations if available
+        try:
+            locale_dir = pkg_resources.resource_filename(__name__, 'locale')
+        except KeyError:
+            pass  # no locale directory in plugin if Babel is not installed
+        else:
+            add_domain(self.env.path, locale_dir)
 
     # INavigationContributor methods
 

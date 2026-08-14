@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: trac-oidc 0.1.5.post1.dev0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-06-05 18:55+0200\n"
-"PO-Revision-Date: 2026-06-05 19:08+0200\n"
+"POT-Creation-Date: 2026-08-14 09:32+0200\n"
+"PO-Revision-Date: 2026-08-14 09:36+0200\n"
 "Last-Translator: Joachim Mairböck <joachim.mairboeck@risc-"
 "software.at>\n"
 "Language-Team: de <LL@li.org>\n"
@@ -24,21 +24,21 @@ msgstr ""
 msgid "Logout"
 msgstr "Abmelden"
 
-#: trac_oidc/trac_oidc.py:84
-msgid "Login using Google"
-msgstr "Anmelden mit Google"
-
 #: trac_oidc/trac_oidc.py:91
+#, python-format
+msgid "Login using %s"
+msgstr "Anmelden mit %s"
+
+#: trac_oidc/trac_oidc.py:98
 #, python-format
 msgid "logged in as %(user)s"
 msgstr "angemeldet als %(user)s"
 
-#: trac_oidc/trac_oidc.py:156
+#: trac_oidc/trac_oidc.py:163
 #, python-format
 msgid ""
 "Hello! You appear to be new here. A new authenticated session with "
 "username '%(authname)s' has been created for you."
 msgstr ""
-"Hallo! Sie scheinen neu hier zu sein. Es wurde eine neue "
-"angemeldete Sitzung mit dem Benutzernamen '%(authname)s' für Sie "
-"erstellt."
+"Hallo! Sie scheinen neu hier zu sein. Es wurde eine neue angemeldete "
+"Sitzung mit dem Benutzernamen '%(authname)s' für Sie erstellt."

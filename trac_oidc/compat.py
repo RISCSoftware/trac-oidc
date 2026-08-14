@@ -11,8 +11,9 @@ from distutils.version import LooseVersion
 import trac
 from trac.env import Environment
 from trac.util.html import html as tag
-from trac.util.translation import _
+from trac.util.translation import domain_functions
 
+_ = domain_functions('messages', ('_'))
 
 def _logout_link(href, **kwargs):
     '''Return "Logout" link
