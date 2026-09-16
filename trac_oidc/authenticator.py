@@ -13,8 +13,11 @@ import httplib2
 from oauth2client.client import flow_from_clientsecrets, FlowExchangeError
 from trac.core import TracError
 from trac.util import hex_entropy
+from trac.util.translation import domain_functions
 
 from .util import strings_differ, DeferredMapping
+
+_ = domain_functions('messages', ('_'))
 
 
 class AuthenticationFailed(TracError):
@@ -91,9 +94,9 @@ class Authenticator(object):
         if error is not None:
             raise AuthenticationFailed(error)
         elif not expected_state or strings_differ(state, expected_state):
-            raise AuthenticationError("incorrect 'state' in redirect")
+            raise AuthenticationError(_("incorrect 'state' in redirect"))
         elif not code:
-            raise AuthenticationError("no 'code' returned in redirect")
+            raise AuthenticationError(_("no 'code' returned in redirect"))
         return code
 
     def _get_credentials(self, code):
@@ -103,7 +106,7 @@ class Authenticator(object):
             return self.flow.step2_exchange(code)
         except FlowExchangeError as ex:
             raise AuthenticationError(
-                "Failed to retrieve credentials: %s" % ex)
+                _("Failed to retrieve credentials: %s"), ex)
 
     def _get_openid_profile(self, credentials):
         """ Get profile in OpenID Connect format.

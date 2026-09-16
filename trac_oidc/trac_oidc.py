@@ -153,10 +153,10 @@ class OidcPlugin(Component):
             return authenticator.get_identity(req)
         except AuthenticationFailed as ex:
             self.log.info("Authentication failed: %s", ex)
-            add_warning(req, "Authentication failed: %s", ex)
+            add_warning(req, _("Authentication failed: %s"), ex)
         except AuthenticationError as ex:
             self.log.error("Authentication error: %s", ex)
-            add_warning(req, "Authentication error: %s", ex)
+            add_warning(req, _("Authentication error: %s"), ex)
 
     def _find_or_create_session(self, req, id_token):
         """ Find or create authenticated session for subject.

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: trac-oidc 0.1.5.post1.dev0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-14 09:32+0200\n"
+"POT-Creation-Date: 2026-09-16 15:14+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,21 +17,44 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.18.0\n"
 
-#: trac_oidc/compat.py:23 trac_oidc/compat.py:35
+#: trac_oidc/authenticator.py:97
+msgid "incorrect 'state' in redirect"
+msgstr ""
+
+#: trac_oidc/authenticator.py:99
+msgid "no 'code' returned in redirect"
+msgstr ""
+
+#: trac_oidc/authenticator.py:109
+#, python-format
+msgid "Failed to retrieve credentials: %s"
+msgstr ""
+
+#: trac_oidc/compat.py:24 trac_oidc/compat.py:36
 msgid "Logout"
 msgstr ""
 
-#: trac_oidc/trac_oidc.py:91
+#: trac_oidc/trac_oidc.py:100
 #, python-format
 msgid "Login using %s"
 msgstr ""
 
-#: trac_oidc/trac_oidc.py:98
+#: trac_oidc/trac_oidc.py:107
 #, python-format
 msgid "logged in as %(user)s"
 msgstr ""
 
-#: trac_oidc/trac_oidc.py:163
+#: trac_oidc/trac_oidc.py:156
+#, python-format
+msgid "Authentication failed: %s"
+msgstr ""
+
+#: trac_oidc/trac_oidc.py:159
+#, python-format
+msgid "Authentication error: %s"
+msgstr ""
+
+#: trac_oidc/trac_oidc.py:172
 #, python-format
 msgid ""
 "Hello! You appear to be new here. A new authenticated session with "
